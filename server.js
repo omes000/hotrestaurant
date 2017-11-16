@@ -1,12 +1,15 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
+var confirm = false;
 
 var app = express();
 var PORT = 3000;
 
-var haveTables = [];
-var waitingList = [];
+var haveTables = [
+];
+var waitingList = [
+];
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -21,6 +24,31 @@ app.get("/view", function(req, res) {
 
 app.get("/make", function(req, res) {
 	res.sendFile(path.join(__dirname, "make.html"));
+});
+
+app.get("/api/tables", function(req, res) {
+	return res.json(haveTables);
+});
+
+app.get("/api/wait", function(req, res) {
+	return res.json(waitingList);
+});
+
+app.post("/api/new", function(req, res){
+	var newReservation = req.body;
+
+	console.log(newReservation);
+
+	if(haveTables.length < 5){
+		haveTables.push(newReservation);
+		confirm = true;
+		console.log("You have a reservation");
+	}
+	else{
+		console.log("You are on the waiting list");
+		confirm = false;
+		waitingList.push(newReservation);
+	}
 });
 
 app.listen(PORT, function() {
