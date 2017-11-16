@@ -5,9 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Document</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/js/script.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 </head>
@@ -57,6 +56,33 @@
 		</div>
 		
 	</div>
+<script>
+	
+		$("#submit").on('click', function(e) {
+			e.preventDefault();
+
+			var data = {
+				name: $('#name').val().trim(),
+				phoneNumber: $('#phoneNumber').val().trim(),
+				email: $('#email').val().trim(),
+				uniqueID: $('#uniqueID').val().trim()
+			}
+
+
+			$.ajax({
+				type: 'POST',
+				data: JSON.stringify(data),
+			    contentType: 'application/json',
+			    url: '/api/new',						
+			    success: function(data) {
+			        console.log('success');
+			        console.log(JSON.stringify(data));
+			    }
+		    })
+
+		})
+
+</script>
 	
 </body>
 </html>
