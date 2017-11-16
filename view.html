@@ -24,10 +24,57 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid">
-		
-		
+	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		    	<h3 class="panel-title" id = "reservationTable">Current Reservations</h3>
+			</div>
+			<div class="panel-body" id = "reservationEntries">
+		   
+  			</div>
+  		</div>
+
+  		<div class="panel panel-default">
+			<div class="panel-heading">
+		    	<h3 class="panel-title" id = "waitingTable">Waiting List</h3>
+			</div>
+			<div class="panel-body" id = "waitingEntries">
+		   
+  			</div>
+  		</div>
+  		<div class = 'row'>
+  			Control Panel
+  			<div class = 'col-lg-12'>
+  				<a href = "#" id = 'clear'>Clear Tables</a> | <a href = "/api/tables">Tables</a> | <a href = "/api/wait">Wait List</a>
+  			</div>
+  		</div>
 	</div>
+
+	<script type = "text/javascript">
+		$.get("/api/tables", function(data){
+			console.log(data);
+			if(data){
+				for (var i = 0; i< data.length; i++){
+					$("#reservationEntries").append("<div class = 'well' id = 'hasTable-" + i + "'><h2><span class = 'label label-primary'>"+(i+1)+"</span> | " + data[i].uniqueID + "</h2>");
+				}
+			}
+		})
+		$.get("/api/wait", function(data){
+			console.log(data);
+			if(data){
+				for (var i = 0; i< data.length; i++){
+					$("#waitingEntries").append("<div class = 'well' id = 'noTable-" + i + "'><h2><span class = 'label label-primary'>"+(i+1)+"</span> | " + data[i].uniqueID + "</h2>");
+				}
+			}
+		})
+
+		$("#clear").on("click", function(){
+			$.post("/api/clear").done(function(){
+
+			})
+			location.reload();
+		})
+	</script>
 	
 </body>
 </html>

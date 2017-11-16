@@ -30,6 +30,12 @@ app.get("/api/tables", function(req, res) {
 	return res.json(haveTables);
 });
 
+app.post("/api/clear", function(req, res) {
+	//return res.json(haveTables);
+	haveTables = [];
+	waitingList = [];
+});
+
 app.get("/api/wait", function(req, res) {
 	return res.json(waitingList);
 });
